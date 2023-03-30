@@ -1,0 +1,30 @@
+import { Meta } from '@storybook/addon-docs';
+import img23 from '../../images/img23.png'
+import img24 from '../../images/img24.png'
+
+
+
+
+
+
+
+<Meta title="Formación/Storybook/Conocimientos - Basicos/Componentes.stories.tsx|.jsx/Stories - Estructuración"/>
+
+
+# Como estructurar un componente
+---
+
+
+
+
+<span style={{display:'flex',width:'100%',justifyContent:'center'}}>
+  <img src={img23} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/> 
+</span>
+
+Siempre vamos a recomendar un desarrollo de React basado en los principios SOLID haciendo que nuestros componentes sean plenamente reusables e independientes.
+
+Por ese mismo motivo cada componente que desarrollemos tendra su propio CSS, esto nos permite poder copiar la carpeta del componente y automaticamente poder usarla en cualquier otro proyecto de REACT. 
+
+Esto mismo ocurre con los `stories` dentro de `Storybook` el fichero de `Button.stories.mdx` puede tener asociados estilos de CSS para mejorar la experiencia de renderizadoy de ahi el crear una carpeta en cada componente que se llame `storie`.
+
+Al tener en un cada componente tanto sus estilos como sus `stories` cuando integremos dicho componente en nuestra nueva APP automaticamente se integrara con el story de documentacion que tengamos configurado en la APP. En caso no estar utilizando `Storybook` bastaria con eliminar la carpeta de `stories` del componente. 

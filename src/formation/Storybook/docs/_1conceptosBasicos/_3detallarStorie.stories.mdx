@@ -1,0 +1,126 @@
+import { Meta } from '@storybook/addon-docs';
+import img18 from '../../images/img18.png'
+import img19 from '../../images/img19.png'
+import img20 from '../../images/img20.png'
+import img21 from '../../images/img21.png'
+import img22 from '../../images/img22.jpg'
+
+
+
+
+
+
+<Meta title="Formación/Storybook/Conocimientos - Basicos/Componentes.stories.tsx|.jsx/Stories - Documentación"/>
+
+
+# Ampliar informacion de nuestra Storie
+---
+Vamos a modificar nuestro componente de React para que `Storybook` pueda actualizar la informacion con mas detalle y que nuestro componente vaya siendo cada vez mas funcional. 
+
+#### Button.jsx
+```javascript
+  import PropTypes from 'prop-types';
+
+/**
+ * Descripcion de nuestro componente que saldra en la parte superior.
+ */
+export const Button = ({setState,label="Cambiar a"})=>{
+    const nombres = ["guille","pau"]
+
+return(
+    <>
+    <button onClick={()=>setState(nombres[0])}>{label} Guille</button>
+    <button onClick={()=>setState(nombres[1])}>{label} Paula</button>
+    </>
+)}
+
+
+Button.propTypes = {
+    /** Detalle de cada propType */
+    setState: PropTypes.func.isRequired,
+    /** Label modifica el texto que sale en el boton */
+    label: PropTypes.string,
+  };
+
+```
+
+#### Vista de la storie
+
+<img src={img18} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+
+Lo primero que nos encontramos en este nuevo codigo es una breve descripcion del propio componente
+```javascript
+  /**
+ * Descripcion de nuestro componente que saldra en la parte superior.
+ */
+```
+Este mensaje que indicamos en `Button.jsx` es el que saldra en nuestro `storie` justo debajo del titulo.
+
+Como se puede apreciar tambien hemos añadido en el codigo los propTypes que ademas de ser una buena practica en React nos permite que `Storybook` detecte automaticamente de que tipo son las properties del componente y si son obligatorias o no.
+Ademas de eso hemos añadido una linea de comentario encima de cada propType `/** Mensaje que va asociado a cada propType */`  que permite que en la pestaña `Docs` en la parte de la `Description` salga.
+
+Este comentario no solo nos permite tener todo mas detallado en el `Storybook` nos permite que cualquier usuario que acceda a nuestro codigo se encuentre con un codigo funcional, mantenible y escalable. 
+
+En el codigo estamos indicando que `setState` es de tipo funcion y es obligatoria con el `.isRequired`, por otro lado le estamos indicando que `label` es de tipo String
+
+
+<img src={img19} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>  
+
+`Storybook` nos permite modificar nuestro componente en vivo al tener bien definidos los `propTypes`, por ejemplo podemos pulsar en la sección `Control` sobre `Set string` y podremos poner el texto que queramos viendo como se actualiza al momento en la parte superior como se aprecia en la imagen anterior.
+
+
+### ¿Y si queremos añadir informacion a las stories secundarias?
+---
+
+Hemos visto como añadir mas informacion a la `Storie` principal a traves de nuestro componente o fichero `Button.jsx`. Pero si queremos añadir informacion a los otros ejemplos del componente o `stories` secundarias tendremo que hacerlo a traves del fichero `Button.stories.jsx`
+
+
+#### Button.stories.jsx
+```javascript
+  import { Button } from './Button';
+
+
+export default {
+  title: 'Components/Button', //Ruta que indicaremos para colocar nuestro componente en el sidebar
+  component: Button,  //Componente vamos a utilizar para generar el storie
+};
+
+
+export const primerStorie = ({label})=> <Button setState={()=>{}} label={label}></Button>
+export const segundoEjemploStorie = ({label})=> <Button setState={()=>{}} label={label}></Button>
+
+
+// Esto lo podemos poner en un componente/fichero a parte. 
+const ejemploMKD = `
+<div className=”custom">
+#### Documentacion de stories con MD externo.
+
+---
+
+Ejemplo de codigo con sintaxis de markdown para un storie.
+</div>`
+//_______________________________________________________
+
+segundoEjemploStorie.parameters = {
+  docs: {
+    description: {
+      story: ejemploMKD,
+    },
+}
+}
+```
+
+* `ejemploMKD` : No es mas que un ejemplo de codigo Markdown el cual hemos decidido meter en una const dentro del codigo. Este codigo MD se puede tener de forma separada en otro fichero e integrarlo con un import en los parametros del storie. 
+
+<span style={{display:'flex',width:'100%',justifyContent:'center'}}>
+  <img src={img20} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+</span>
+
+* `parameters` : Cada `storie` dentro del componente que documentamos tiene una serie de `parameters` (parametros) donde podremos configurar algunas opciones como en este caso `story` que haria referencia al texto que se indica por encima de nuestra `storie` (componente renderizado con datos de ejemplo).
+<span style={{display:'flex',width:'100%',justifyContent:'center'}}>
+  <img src={img21} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+</span>
+
+
+#### Vista de la storie
+<img src={img22} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>

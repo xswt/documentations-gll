@@ -1,0 +1,102 @@
+import { Canvas, Meta, Story,  ArgsTable,Source  } from '@storybook/addon-docs';
+import './ButtonStories.css' 
+import Button from "../Button.jsx"
+import {Template,TemplateFuncional} from "./ButtonTemplates"
+
+<Meta title="Formación/Storybook/Conocimientos - Basicos/Componentes.stories.mdx/Componente de Ejemplo" component={Button} />
+
+
+
+# Titulo del componente de Ejemplo/Storie
+
+Todo este componente se ha creado en un fichero MDX dando mas posibilidades de personalizacion la siguiente storie esta insertada con un `Canvas` y sin usar `Template` al 
+al ser la primera definida en el documento sera la primera en posicion. 
+
+<Canvas>
+  <Story 
+    name="Main Story"
+    args={{
+      label:'Cambiar a'
+    }}>
+    {(args)=>{
+        return(
+            <div className='exampleBox'>
+                <Button setState={()=>{}} {...args} />
+            </div>
+        )
+    }}
+  </Story>
+</Canvas>
+
+Tabla de props del componente que mostramos en el story, pero esta tabla no permite modificar el componente, no nos muestras la columna de `Control`
+
+<ArgsTable of={Button} />
+
+Tenemos otra opcion para mostrar la tabla de props del componente asociandolo por nombre de la `storie` lo que nos permite modificarlo con la columna de `Control`
+
+<ArgsTable story="Main Story" />
+
+## Stories usando templates
+
+
+
+
+### Template basico
+<Canvas>
+  <Story 
+    name="Template basico del componente"
+    args={{
+      label: 'Cambiar a',
+    }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+### Template funcional
+<Canvas>
+  <Story 
+    name="Template basico del componente 2"
+    args={{
+      label: 'Cambiar a',
+    }}>
+    {TemplateFuncional.bind({})}
+  </Story>
+</Canvas>
+
+### Stories en bloque
+
+Podemos añadir varios elementos en una sola `storie` en el mismo bloque
+
+<Canvas>
+  <Story  name="Elemento 1 bloque">
+    {Template.bind({})}
+  </Story>
+    <Story  name="Elemento 2 bloque"
+    args={{
+      label: 'Sustituir por',
+    }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+
+### Añadir una Storie ya definida previamente
+
+Para ello tendremos que poner el `id` que corresponde con la ruta de la URL de la `storie` que queremos llamar. En este ejemplo estamos llamado a la `storie` creada con el titulo de `Template Funcional`.
+<Canvas>
+<Story id="formación-storybook-conocimientos-basicos-componentes-stories-mdx-componente-de-ejemplo--template-basico-del-componente-2"/>
+</Canvas>
+
+### Podemos añadir esa misma Storie sin el Canvas
+
+La principal diferencia es que no podremos ver el codigo de la `storie`
+
+<Story id="formación-storybook-conocimientos-basicos-componentes-stories-mdx-componente-de-ejemplo--template-basico-del-componente-2"/>
+
+Pero si podemos añadir tabla de propiedades
+
+<ArgsTable story="Template basico del componente 2" />
+
+Podemos mostrar el codigo de una `storie`a traves de su id que corresponde con la ruta de la URL de la `storie` que queremos llamar, esto es util cuando no envolvemos el componente en un `Canvas` y por lo tanto no tenemos la opcion de `Show code`.
+
+<Source id="formación-storybook-conocimientos-basicos-componentes-stories-mdx-componente-de-ejemplo--template-basico-del-componente" />

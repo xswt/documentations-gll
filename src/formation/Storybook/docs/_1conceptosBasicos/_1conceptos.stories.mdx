@@ -1,0 +1,57 @@
+import { Meta } from '@storybook/addon-docs';
+import img4 from '../../images/img4.png'
+import img5 from '../../images/img5.png'
+import img6 from '../../images/img6.jpg'
+import img7 from '../../images/img7.png'
+import img8 from '../../images/img8.png'
+import img9 from '../../images/img9.png'
+
+
+
+<Meta title="Formación/Storybook/Conocimientos - Basicos/Conceptos"/>
+
+# CONOCIMIENTOS BASICOS
+
+> Se entiende como `storie` al conjunto de datos relacionados con la documentacion de un componente. Esta documentacion se compone de un renderizado del componente mas una breve descripcion de los parametros que acepta dicho componente. 
+
+
+
+
+La primera carpeta que encontramos es la de `.storybook` esta carpeta contiene los ficheros propios de configuración 
+
+<span style={{display:'flex',width:'100%',justifyContent:'center'}}>
+  <img src={img4} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+</span>
+
+Como podemos apreciar por "defecto" nos vienen solo dos `Main` y `Preview` pero hay una mas importante que debemos conocer que es `Manager`
+   * `Main` corresponde con la configuracion global de nuestro `storybook`.
+   
+    <img src={img5} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+
+
+   * `Preview` corresponde con la parte que vemos de los componentes que se renderizan en el `storybook`.
+   * `Manager` corresponde con el resto del `storybook`.
+
+     
+     <img src={img6} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+
+      
+   A parte de la carpeta `.storybook` por defecto nos crea en `src` una carpeta llamada `stories` .
+
+  <span style={{display:'flex',width:'100%',justifyContent:'center'}}>
+    <img src={img7} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+  </span>
+    
+Esta carpeta contiene varios ejemplos de como documentar nuestros componentes. Principalmente tenemos que entender que existen dos tipos de ficheros:
+   
+   * `nombreFichero.stories.mdx` 
+   * `nombreFichero.stories.jsx/tsx` 
+  
+   
+   Como hemos visto en la configuracion general nuestro `Storybook` buscara en el path src todos los ficheros que tengan `.stories` y terminen en `.jsx .js .ts .tsx .mdx`. <img src={img8} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/> o <img src={img9} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+   
+   
+La carpeta stories realmente no es necesaria , la ha creado `storybook` como recomendacion de donde almacenar nuestros ficheros. Nosotros podemos poner los ficheros a la altura que queramos siempre que esten dentro de la ruta especificada en el fichero de configuración `main`
+
+## DOCUMENTAR COMPONENTES
+Ahora que tenemos claros los conceptos basicos de `storybook` y tenemos el entorno montado y funcionando podemos ponernos a trabajar con el codigo y documentar nuestros primeros componentes. Vamos a ir viendo los dos tipos de ficheros que se pueden crear para documentar y las configuraciones que ofrecen cada uno al montar las `stories`.

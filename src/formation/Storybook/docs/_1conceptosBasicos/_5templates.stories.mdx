@@ -1,0 +1,126 @@
+import { Meta } from '@storybook/addon-docs';
+import img25 from '../../images/img25.png'
+
+
+
+
+
+
+
+<Meta title="Formación/Storybook/Conocimientos - Basicos/Componentes.stories.tsx|.jsx/Stories - Templates"/>
+
+
+# Agilizar el desarrollo de Stories funcionales
+---
+
+Anteriormente hemos visto como desarrollar una `storie` de un componente de una forma mas funcional y dinamica. Como hemos podido apreciar segun la complejidad del componente puede resultar bastante tedioso desarrollar una `storie` funcional y si a eso le sumamos varias `stories secundarias` puede llevarnos mas tiempo del deseado y resultar contraproducente. 
+
+Para ello tenemos una forma de crear un `template` que podremos reutilizar para las `stories secundarias` agilizando el desarrollo y permitiendo distintas configuraciones del componente de una forma realmente sencilla.
+
+#### Button.stories.jsx
+```javascript
+import React, { useState } from 'react';
+import { Button } from '../Button';
+import './ButtonStories.css' 
+import { ejemploMKD } from './ejemploMKD';
+
+
+export default {
+  title: 'Formación/Storybook/Conocimientos - Basicos/Componentes.stories.tsx|.jsx/Componente de Ejemplo', 
+  component: Button,  
+};
+
+export const MainStorie = ({label})=> <div className='exampleBox'><Button setState={()=>{}} label={label}></Button></div>
+
+
+
+ //PODEMOS CREAR UN TEMPLATE QUE USAREMOS EN EL RESTO DE EJEMPLOS MODIFICANDO SOLO LOS ARGUMENTOS QUE NOS INTERESE.
+ const Template = (args) => {
+  const [name, setName] = useState('no name')
+
+  return(
+    <>
+    <div className='exampleBox'>
+      El nombre actual es: {name}
+        <br/>
+        <br/>
+      <Button setState={setName} {...args}></Button>
+      </div>
+    </>
+  )
+};
+//_________________________________________________________
+
+
+
+
+//Storie con documentacion MKD.
+export const TemplateYParametros = Template.bind({});
+TemplateYParametros.parameters = {
+  docs: {
+    description: {
+      story: ejemploMKD,
+    },
+}
+}
+
+//Storie modificando los argumentos del template.
+export const TemplateYArgumentos = Template.bind({});
+TemplateYArgumentos.args = {
+  label: 'Sistituye nombre por',
+};
+
+//Storie con documentacion MKD y modificando los argumentos del template.
+export const TemplateParametrosYArgumentos = Template.bind({});
+TemplateParametrosYArgumentos.parameters = {
+  docs: {
+    description: {
+      story: ejemploMKD,
+    },
+}
+}
+TemplateParametrosYArgumentos.args = {
+  label: 'Remplazar nombre por',
+};
+```
+
+Como podemos ver en el codigo de arriba para crear un `Template` tendremos que crear una constante y configurar nuestro componente en ella
+```javascript
+   const Template = (args) => {
+  const [name, setName] = useState('no name')
+
+  return(
+    <>
+    <div className='exampleBox'>
+      El nombre actual es: {name}
+        <br/>
+        <br/>
+      <Button setState={setName} {...args}></Button>
+      </div>
+    </>
+  )
+};
+```
+
+Tras ese simple paso solo tendremos que llamar a nuestro `Template` y añadirle un `.bind({})` teneis mas documentacion del metodo [.bind en este enlace][bindDocMDN], basicamente lo que hace es copiar la funcion con sus parametros. Esto nos permite acceder posteriormente a dichos parametros en caso de necesitar modificarlos como podemos ver en este codigo.
+
+```javascript
+  TemplateYArgumentos.args = {
+    label: 'Sistituye nombre por',
+  };
+```
+
+Estamos accediendo a la propertie `args` definida con anterioridad en nuestro `Template` y estamos modificando el valor de `label`.
+
+#### Vista de la Storie
+
+Asi es como quedaria nuestra ventana `Docs` tras todos los cambios realizados.
+
+<span style={{display:'flex',width:'100%',justifyContent:'center'}}>
+  <img src={img25} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/> 
+</span>
+
+
+
+
+[bindDocMDN]: https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Function/bind

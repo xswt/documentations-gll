@@ -1,0 +1,138 @@
+import { Meta } from '@storybook/addon-docs';
+import img24 from '../../images/img24.png'
+
+
+
+
+
+
+
+<Meta title="Formación/Storybook/Conocimientos - Basicos/Componentes.stories.tsx|.jsx/Stories - Funcionalidad"/>
+
+
+# Como añadir/mejorar la funcionalidad de nuestras Stories
+---
+Con los dos primeros apartados hemos visto como comentar nuestro componente `Button.jsx` y como generar `stories` secundarias que a modo concepto serian distintas posibles configuraciones de nuestro componente representadas de forma visual en nuestro `Storybook`.
+Los ejemplos que hemos visto son bastante sencillos y se basan en un componente sin a penas configuracion necesaria. 
+
+Una `Storie` no tiene que estar formada por un unico componente. En este apartado vamos a ver un poco mas en detalle la forma correcta de generar stories y como podemos renderizar de una forma mas `funcional` nuestros componentes.
+
+
+## Informacion importante!
+>
+Esta forma de añadir informacion al renderizado el componente es util solo para entender como integrar el componente en el codigo y valorar distintas configuraciones.
+No debemos olvidar que cuando demos a `Show code` nos mostrara todo lo que tengamos en el return.
+>
+Esto implica, que al haber añadido informacion adicional a nuestro componente para ver como funciona, el codigo que mostramos incluira dicha informacion extra.
+Tenemos que tener en cuenta que las `stories` secundarias son las que nos muestran distintas configuraciones del componente y las unicas que deberian llevar esa informacion extra de ayuda. La `storie` principal o la primera se tendria que mantener mas pura, mostrando solo el componente que estamos documentando.
+
+
+Con todo esto en mente vamos a ver de nuevo nuestros ficheros.
+
+#### Button.jsx
+```javascript
+import PropTypes from 'prop-types';
+
+/**
+ * Descripcion de nuestro componente que saldra en la parte superior.
+ */
+export const Button = ({setState,label="Cambiar a"})=>{
+    const nombres = ["guille","pau"]
+
+return(
+    <>
+    <span>
+      <button onClick={()=>setState(nombres[0])}>{label} Guille</button>
+      <button onClick={()=>setState(nombres[1])}>{label} Paula</button>
+    </span>
+    </>
+)}
+
+
+Button.propTypes = {
+    /** Detalle de cada propType */
+    setState: PropTypes.func.isRequired,
+    /** Label modifica el texto que sale en el boton */
+    label: PropTypes.string,
+  };
+```
+
+
+#### ButtonStories.css
+```css
+  .exampleBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+```
+
+Añadimos estilos basicos y sencillos pero que daran una imagen mucho mas elegante a nuestro componente dentro del `Storybook`.
+
+
+#### Button.stories.jsx
+```javascript
+import React, { useState } from 'react';
+import { Button } from '../Button';
+import './ButtonStories.css' //Podemos añadir estilos a nuestros ficheros Stories
+
+
+export default {
+  title: 'Components/Button', 
+  component: Button,  
+};
+
+export const PrimerStorie = ({label})=> <div className='exampleBox'><Button setState={()=>{}} label={label}></Button></div>
+
+export const SegundoEjemploStorie = ({label})=>{
+
+  const [name, setName] = useState('no name')
+
+  return(
+    <>
+    <div className='exampleBox'>
+      El nombre actual es: {name}
+        <br/>
+        <br/>
+      <Button setState={setName} label={label}></Button>
+      </div>
+    </>
+  )
+} 
+
+```
+
+Como hemos mencionado anteiormente una `Storie` no tiene por que tener solo un componente, la mayoria de las veces los componentes requieren de datos de entrada o de un componente padre para poder entender realmente cual es su funcion. 
+
+En nuestro ejemplo de codigo hemos modificado 
+
+```javascript
+  export const segundoEjemploStorie = ({label})=> <Button setState={()=>{}} label={label}></Button>
+```
+
+por esto otro
+
+```javascript
+  export const SegundoEjemploStorie = ({label})=>{
+
+  const [name, setName] = useState('no name')
+
+  return(
+    <>
+    <div className='exampleBox'>
+      El nombre actual es: {name}
+        <br/>
+        <br/>
+      <Button setState={setName} label={label}></Button>
+      </div>
+    </>
+  )
+} 
+```
+
+Lo primero que tenemos que apreciar es que ahora nuestra `const` empieza por letra mayuscula, esto se debe a que nuestra constante ahora pasa a ser un componente de React. Tras ese cambio lo unico que hemos añadido es un useState con `nombre` para mostrar la funcion que hace el componente `<Button setState={setName} label={label}></Button>` y por ultimo un div con un `className` para dar un estilado basico a nuestro `Storie`.
+
+<img src={img24} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/> 
+
+Con tan pocos cambios podremos apreciar una gran mejora visual en nuestro `Storybook` luciendo mas profesional y funcional.
+

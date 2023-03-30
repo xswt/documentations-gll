@@ -1,0 +1,119 @@
+import { Meta } from '@storybook/addon-docs';
+import img10 from '../../images/img10.png'
+import img11 from '../../images/img11.png'
+import img12 from '../../images/img12.png'
+import img13 from '../../images/img13.png'
+import img14 from '../../images/img14.png'
+import img15 from '../../images/img15.png'
+import img16 from '../../images/img16.png'
+import img17 from '../../images/img17.png'
+
+
+
+
+
+<Meta title="Formación/Storybook/Conocimientos - Basicos/Componentes.stories.tsx|.jsx/Primera Storie"/>
+
+
+
+# Configurar nuestra primera Storie
+---
+Para desarrollar nuestra primera storie vamos a empezar eliminando todo el contenido que nos instala por defecto `Storybook` en la carpeta de `stories`. Una vez eliminado todo procedemos por crear nuestro primer componente:
+
+#### COMPONENTE DE REACT - Button.jsx
+```javascript
+  export const Button = ({setState,label="Cambiar a"})=>{
+
+    const nombres = ["guille","pau"]
+
+
+return(
+    <>
+    <button onClick={()=>setState(nombres[0])}>{label} Guille</button>
+    <button onClick={()=>setState(nombres[1])}>{label} Paula</button>
+    </>
+)}
+```
+
+Esto seria un componente básico de React que se usa para cambiar el nombre de un estado en el padre entre Guille y Paula dependiendo de que botón pulsemos. Tenemos dos props definidas:
+* `setState` que nos permite modificar un estado del useState en el padre que use el componente.
+* `label` texto que acompaña a los botones que modifican el nombre entre Guille y Paula.
+
+
+Vamos a ver como configurar paso a paso este componente para que se integre sin problemas en nuestro `storybook`.
+
+Partimos de que hemos eliminado la carpeta de stories que nos crea por defecto en la instalacion de `storybook` y tenemos levantado el entorno `npm run storybook`. Tendremos la siguiente imagen:
+
+<img src={img10} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+
+Nos muestra un error de que no encuentra ninguna storie en nuestro src, es correcto ya que hemos eliminado todo lo que nos ponia por defecto la instalacion. Asi podemos partir de cero y entender todo paso por paso. 
+
+Al lado de nuestro componente `Button.jsx` vamos a crear `Button.stories.jsx` al poner stories ya va a poder encontrarlo y leerlo `storybook`. Vamos a añadir las primeras lineas de codigo para generar nuestra primera `storie`
+
+#### Button.storie.jsx
+```javascript
+import { Button } from './Button';
+
+
+export default {
+  title: 'Button', //Ruta que indicaremos para colocar nuestro componente en el sidebar
+  component: Button,  //Componente vamos a utilizar para generar el storie
+};
+
+
+export const primerStorie = ({label})=> <Button setState={()=>{}} label={label}></Button>
+
+```
+
+Una vez guardemos los cambios podremos ver que ya no tenemos el error y que sale nuestra primera `storie` en el navegador
+
+<img src={img11} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+
+
+Actualmente no es funcional pero ya nos permite ver como "quedaria" nuestro componente si lo integramos en el proyecto de react. En cada storie tenemos dos formas de ver la documentacion:
+
+<span style={{display:'flex',width:'100%',justifyContent:'center'}}>
+<img src={img12} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+</span>
+
+
+
+
+* `Canvas` Es una parte mas interactiva, nos permite modificar las properties del componente y ver al momento como cambia
+* `Docs` Es una parta mas informativa, nos permite leer mas al detalle como funciona el componente y todas sus opciones de configuración.
+
+Esta configuración <img src={img13} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/> lo que nos indica es la posicion del componente en el sidebar de la izquierda. En nuestro ejemplo solo hemos puesto `Button` de ahi que tengamos esta imagen
+
+<span style={{display:'flex',width:'100%',justifyContent:'center'}}>
+<img src={img14} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+</span>
+
+Si añadimos algo mas a la ruta como por ejemplo `title: 'Components/Button` el resultado seria el siguiente:
+
+<span style={{display:'flex',width:'100%',justifyContent:'center'}}>
+  <img src={img15} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+</span>
+
+Nos crearia un nuevo "grupo" que engloba a `Button`, esto nos vale para agrupar diferentes `stories` por categorias o grupos de componentes en el sidebar y tenerlo ordenado. 
+
+Es importante destacar que dentro de cada `storie` podemos tener varios ejemplos programados. En nuestro codigo `Button.stories.jsx` solo tenemos un ejemplo configurado:
+```javascript
+  export const primerStorie = ({label})=> <Button setState={()=>{}} label={label}></Button>
+```
+Pero podriamos añadir otro más o los que queramos:
+
+```javascript
+  export const primerStorie = ({label})=> <Button setState={()=>{}} label={label}></Button>
+  export const segundoEjemploStorie = ({label})=> <Button setState={()=>{}} label={label}></Button>
+```
+
+Dando como resultado en el sidebar la siguiente imagen:
+<span style={{display:'flex',width:'100%',justifyContent:'center'}}>
+  <img src={img16} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+</span>
+
+Sin embargo en la pestaña de `Docs` veremos solo un ejemplo principal y `Segundo Ejemplo Storie` pero... que ha pasado con el `primerStorie`?.
+
+<img src={img17} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+
+Esto se debe a que el primer ejemplo o `storie` que configuremos en el fichero SIEMPRE sera tomado como el principal y sera el que se muestre al principio. 
