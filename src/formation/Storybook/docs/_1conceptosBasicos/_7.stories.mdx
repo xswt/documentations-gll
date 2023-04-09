@@ -7,6 +7,10 @@ import img14 from '../../images/img14.png'
 import img15 from '../../images/img15.png'
 import img16 from '../../images/img16.png'
 import img17 from '../../images/img17.png'
+import img26 from '../../images/img26.png'
+import img27 from '../../images/img27.png'
+import img28 from '../../images/img28.png'
+import img29 from '../../images/img29.png'
 
 
 
@@ -50,25 +54,56 @@ Nos muestra un error de que no encuentra ninguna storie en nuestro src, es corre
 
 Al lado de nuestro componente `Button.jsx` vamos a crear `Button.stories.jsx` al poner stories ya va a poder encontrarlo y leerlo `storybook`. Vamos a añadir las primeras lineas de codigo para generar nuestra primera `storie`
 
-#### Button.storie.jsx
+#### Button.storie.mdx
 ```javascript
-import { Button } from './Button';
+import { Canvas, Meta, Story,  ArgsTable,Source  } from '@storybook/addon-docs';
+import Button from "../Button.jsx"
+
+ <Meta title="Button" component={Button} />
 
 
-export default {
-  title: 'Button', //Ruta que indicaremos para colocar nuestro componente en el sidebar
-  component: Button,  //Componente vamos a utilizar para generar el storie
-};
 
+# Titulo del componente de Ejemplo/Storie
 
-export const primerStorie = ({label})=> <Button setState={()=>{}} label={label}></Button>
-
+Todo este componente se ha creado en un fichero MDX dando mas posibilidades de personalizacion. 
 ```
 
 Una vez guardemos los cambios podremos ver que ya no tenemos el error y que sale nuestra primera `storie` en el navegador
 
-<img src={img11} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+<img src={img26} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
 
+A diferencia de las stories que creamos en los ficheros `Button.stories.jsx` este es un `mdx` esto implica que se basa en texto plano de `Markdown`
+para integrar nuestro componente como `storie` tendremos que añadir el fichero el siguiente codigo:
+
+```javascript
+import { Canvas, Meta, Story,  ArgsTable,Source  } from '@storybook/addon-docs';
+import Button from "../Button.jsx"
+
+ <Meta title="Button" component={Button} />
+
+
+
+# Titulo del componente de Ejemplo/Storie
+
+Todo este componente se ha creado en un fichero MDX dando mas posibilidades de personalizacion. 
+
+<Canvas>
+  <Story name="Main Story">
+    {(args)=><Button setState={()=>{}} {...args} />}
+  </Story>
+</Canvas>
+
+
+```
+
+Con ese nuevo codigo el documento pasará a tener otro icono en el slider y veremos como actuara de la misma forma que los ficheros `.storie.jsx` dando lugar a la siguiente imagen
+<span style={{display:'flex',width:'100%',justifyContent:'center'}}>
+<img src={img27} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+</span>
+
+Para poder mostrar la `storie` y modificar sus parametros de configuracion hemos tenido que añadir dos etiquetas nuevas al codigo
+* `<Canvas>` que hace referencia al panel donde se coloca el componente renderizado, nos permite ver su codigo. 
+* `<Story>` que hace referencia al componente que vamos a renderizar, un mismo `Canvas` puede tener varias `Stories`. 
 
 Actualmente no es funcional pero ya nos permite ver como "quedaria" nuestro componente si lo integramos en el proyecto de react. En cada storie tenemos dos formas de ver la documentacion:
 
@@ -96,24 +131,37 @@ Si añadimos algo mas a la ruta como por ejemplo `title: 'Components/Button` el 
 
 Nos crearia un nuevo "grupo" que engloba a `Button`, esto nos vale para agrupar diferentes `stories` por categorias o grupos de componentes en el sidebar y tenerlo ordenado. 
 
-Es importante destacar que dentro de cada `storie` podemos tener varios ejemplos programados. En nuestro codigo `Button.stories.jsx` solo tenemos un ejemplo configurado:
+Es importante destacar que dentro de cada `storie` podemos tener varios ejemplos programados. En nuestro codigo `Button.stories.mdx` solo tenemos un ejemplo configurado:
 ```javascript
-  export const primerStorie = ({label})=> <Button setState={()=>{}} label={label}></Button>
+  <Canvas>
+  <Story name="Main Story">
+    {(args)=><Button setState={()=>{}} {...args} />}
+  </Story>
+</Canvas>
 ```
 Pero podriamos añadir otro más o los que queramos:
 
 ```javascript
-  export const primerStorie = ({label})=> <Button setState={()=>{}} label={label}></Button>
-  export const segundoEjemploStorie = ({label})=> <Button setState={()=>{}} label={label}></Button>
+ <Canvas>
+  <Story name="Main Story">
+    {(args)=><Button setState={()=>{}} {...args} />}
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Other Story">
+    {(args)=><Button setState={()=>{}} label={"Modificar nombre a "} {...args} />}
+  </Story>
+</Canvas>
 ```
 
 Dando como resultado en el sidebar la siguiente imagen:
 <span style={{display:'flex',width:'100%',justifyContent:'center'}}>
-  <img src={img16} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+  <img src={img28} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
 </span>
 
-Sin embargo en la pestaña de `Docs` veremos solo un ejemplo principal y `Segundo Ejemplo Storie` pero... que ha pasado con el `primerStorie`?.
+En la pestaña `Docs` tendremos la siguiente imagen:
 
-<img src={img17} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
+<img src={img29} style={{boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}/>
 
 Esto se debe a que el primer ejemplo o `storie` que configuremos en el fichero SIEMPRE sera tomado como el principal y sera el que se muestre al principio. 
